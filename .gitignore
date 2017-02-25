@@ -8,6 +8,10 @@ gulpfile.js
 node_modules/
 bower_components/
 
+# Development Directories
+_preview/
+_backups/
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
