@@ -1,0 +1,18 @@
+html {
+  height: 100%;
+}
+
+body {
+  background: #222333;
+  background-image: radial-gradient(#777777, #444444);
+  background-attachment: fixed;
+}
+
+.container-fluid {
+  padding-top: 35px;
+}
+
+.panel {
+  border-radius: 2px;
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
