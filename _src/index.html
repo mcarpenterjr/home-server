@@ -38,13 +38,27 @@
     </div>
     <div class="row">
       <div class="col-sm-10 col-sm-offset-1">
-          <div class="panel panel-info">
+          <div class="panel panel-info five-day-table">
             <div class="panel-heading">
-              <h3 class="panel-title">Sample Bootstrap Panel</h3>
+              <h3 class="panel-title">5 Day Forecast 3<sup>HR Interval</sup></h3>
             </div>
             <div class="panel-body">
               Cool Info about our web server will show up here.
             </div>
+            <table class="table">
+              <thead>
+                <tr>
+                <th>Temperature (F)</th>
+                <th>Description</th>
+            </tr>
+              </thead>
+              <tbody data-bind="foreach: model.fiveDay">
+                <tr>
+                  <td data-bind="text: main.temp"></td>
+                  <td data-bind="text: weather[0].description"></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
       </div>
     </div>
@@ -76,6 +90,10 @@
     <script src="lib/jquery/jquery-3.1.1.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="lib/knockoutjs/knockout.min.js"></script>
     <script src="js/index.js"></script>
+    <script>
+      init();
+    </script>
   </body>
 </html>
