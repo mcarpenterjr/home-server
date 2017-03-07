@@ -1,15 +1,15 @@
 var oWDKey = '8968f560767b83ff6972db1aec284389';
+var oWDKey = '8968f560767b83ff6972db1aec284389';
+var oWDKey = '8968f560767b83ff6972db1aec284389';
 var oWDFCUrl = 'http://api.openweathermap.org/data/2.5/weather';
 var oWDFC5DUrl = 'http://api.openweathermap.org/data/2.5/forecast';
 
 function model() {
   var self = this;
 
-  self.lat = ko.observable();
-  self.long = ko.observable();
-  self.townShip = ko.observable();
+  self.locationInfo = ko.observable();
 
-  self.current = ko.observableArray();
+  self.current = ko.observable();
 
   self.fiveDay = ko.observableArray();
 
@@ -23,13 +23,22 @@ function viewModel() {
 
   }
 
-  self.fiveday = function() {
+  self.fiveDay = function() {
     $.getJSON(oWDFC5DUrl, {
       id: 5280935,
       units: 'imperial',
       APPID: oWDKey,
     }, function(json, textStatus) {
       console.log(json.list);
+      model.locationInfo = {
+        city: ko.observable(json.city.name),
+        country: ko.observable(json.city.country),
+        coords: {
+          lat: ko.observable(json.city.coord.lat),
+          lon: ko.observable(json.city.coord.lon),
+        }
+      }
+      console.log(model.locationInfo);
       model.fiveDay(json.list);
     });
   }
@@ -42,12 +51,30 @@ function viewModel() {
     },
     function(json, textStatus) {
       console.log(json);
-      $('.weather-current').append('<ul class="conditions"></ul>');
-      $('.conditions').append('<li><span class="label label-success">Current Temp:</span> <span class="badge">' + json.main.temp + '</span></li>');
-      $('.conditions').append('<li>Humidity: ' + json.main.humidity + '%</li>');
-      $('.conditions').append('<li>Pressure: ' + json.main.pressure + '<sup>bar</sup></li>');
-      $('.conditions').append('<li>Temperature: ' + json.main.temp_max + '<sup>HIGH</sup></li>');
-      $('.conditions').append('<li>Temperature: ' + json.main.temp_min + '<sup>LOW</sup></li>');
+      model.current = {
+        main: {
+          temp: ko.observable(json.main.temp),
+          humidity: ko.observable(json.main.humidity),
+          temp_min: ko.observable(json.main.temp_min),
+          temp_max: ko.observable(json.main.temp_max)
+        },
+        wind: {
+          speed: ko.observable(json.wind.speed),
+          deg: ko.observable(json.wind.deg)
+        },
+        clouds: {
+          all: ko.observable(json.clouds.all)
+        },
+        // rain: {
+        //   past: ko.observable(json.rain.3h)
+        // },
+        // snow: {
+        //   past: ko.observable(json.snow.3h)
+        // },
+        id: ko.observable(json.id),
+        name: ko.observable(json.name)
+      };
+      console.log(model.current);
     });
   }
 

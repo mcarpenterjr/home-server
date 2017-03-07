@@ -26,12 +26,13 @@
         </div>
       </div>
       <div class="col-sm-5">
-        <div class="panel">
+        <div class="panel panel-info">
           <div class="panel-heading">
-            <h3 class="panel-title">Sample Bootstrap Panel</h3>
+            <h3 class="panel-title">Location Information</h3>
           </div>
           <div class="panel-body">
-            Cool Info about our web server will show up here.
+            <span data-bind="text: model.locationInfo.city"></span>,
+            <span data-bind="text: model.locationInfo.country"></span>
           </div>
         </div>
       </div>
