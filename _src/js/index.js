@@ -9,42 +9,54 @@ function model() {
   self.long = ko.observable();
   self.townShip = ko.observable();
 
+  self.current = ko.observableArray();
+
   self.fiveDay = ko.observableArray();
 
 }
 var model = new model();
 
-function fiveDay() {
-  $.getJSON(oWDFC5DUrl, {
-    id: 5280935,
-    units: 'imperial',
-    APPID: oWDKey,
-  }, function(json, textStatus) {
-    console.log(json.list);
-    model.fiveDay(json.list);
-  });
-}
+function viewModel() {
+  var self = this;
 
-function weatherNow() {
-  $.getJSON(oWDFCUrl, {
-    id: 5280935,
-    units: 'imperial',
-    APPID: oWDKey,
-  },
-  function(json, textStatus) {
-    console.log(json);
-    $('.weather-current').append('<ul class="conditions"></ul>');
-    $('.conditions').append('<li><span class="label label-success">Current Temp:</span> <span class="badge">' + json.main.temp + '</span></li>');
-    $('.conditions').append('<li>Humidity: ' + json.main.humidity + '%</li>');
-    $('.conditions').append('<li>Pressure: ' + json.main.pressure + '<sup>bar</sup></li>');
-    $('.conditions').append('<li>Temperature: ' + json.main.temp_max + '<sup>HIGH</sup></li>');
-    $('.conditions').append('<li>Temperature: ' + json.main.temp_min + '<sup>LOW</sup></li>');
-  });
+  self.locationData = function(){
+
+  }
+
+  self.fiveday = function() {
+    $.getJSON(oWDFC5DUrl, {
+      id: 5280935,
+      units: 'imperial',
+      APPID: oWDKey,
+    }, function(json, textStatus) {
+      console.log(json.list);
+      model.fiveDay(json.list);
+    });
+  }
+
+  self.weatherNow = function() {
+    $.getJSON(oWDFCUrl, {
+      id: 5280935,
+      units: 'imperial',
+      APPID: oWDKey,
+    },
+    function(json, textStatus) {
+      console.log(json);
+      $('.weather-current').append('<ul class="conditions"></ul>');
+      $('.conditions').append('<li><span class="label label-success">Current Temp:</span> <span class="badge">' + json.main.temp + '</span></li>');
+      $('.conditions').append('<li>Humidity: ' + json.main.humidity + '%</li>');
+      $('.conditions').append('<li>Pressure: ' + json.main.pressure + '<sup>bar</sup></li>');
+      $('.conditions').append('<li>Temperature: ' + json.main.temp_max + '<sup>HIGH</sup></li>');
+      $('.conditions').append('<li>Temperature: ' + json.main.temp_min + '<sup>LOW</sup></li>');
+    });
+  }
+
 }
+var app = new viewModel();
 
 function init() {
-  weatherNow();
-  fiveDay();
+  app.weatherNow();
+  app.fiveDay();
 }
 
 ko.applyBindings(model);
